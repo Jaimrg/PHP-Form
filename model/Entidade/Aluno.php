@@ -50,7 +50,10 @@ class Aluno{
   
   public function cadastrar(){
     //DEFINIR A DATA
-    $this->data_nascimento = date('Y-m-d H:i:s');
+   $this->data_nascimento = date('Y-m-d H:i:s');
+    $var = $this->data_nascimento;
+   $date = str_replace('-', '/', $var);
+   $result = date('d-m-Y', strtotime($date));
 
     //INSERIR o Aluno NO BANCO
     $obDatabase = new Database('alunos');
@@ -109,5 +112,10 @@ class Aluno{
   public static function getAluno($id){
     return (new Database('alunos'))->select('id = '.$id)
                                   ->fetchObject(self::class);
+  }
+
+  public static function get_by_province($where = null, $order = null, $limit = null){
+    return (new Database('alunos'))->select_province($where,$order,$limit)
+                                  ->fetchAll(PDO::FETCH_CLASS,self::class);
   }
 }

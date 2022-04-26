@@ -19,8 +19,8 @@
                       <td>'.$Aluno->id.'</td>
                       <td>'.$Aluno->nome.'</td>
                       <td>'.$Aluno->apelido.'</td>
-                      <td>'.date('d/m/Y à\s H:i:s',strtotime($Aluno->data_nascimento)).'</td>
-                      <td>'.$Aluno->distrito_id.'</td>
+                      <td>'.date('d/m/Y',strtotime($Aluno->data_nascimento)).'</td>
+                      <td>'.$Aluno->designacao.'</td>
                       <td>'.($Aluno->genero == 1 ? 'M' : 'F').'</td>                      
                       <td>
                         <a href="Editar.php?id='.$Aluno->id.'">

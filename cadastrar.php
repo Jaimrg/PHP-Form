@@ -5,6 +5,8 @@ require __DIR__.'/vendor/autoload.php';
 use \App\Entidade\Aluno;
 $obAluno = new Aluno;
 
+//echo "<pre>"; print_r($_POST); echo "<pre>"; exit;
+
 if(isset($_POST['nome'],$_POST['apelido'],$_POST['data_nascimento'],$_POST['distrito'],$_POST['genero'])){
 
     $obAluno->nome    = $_POST['nome'];

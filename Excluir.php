@@ -10,10 +10,10 @@ if(!isset($_GET['id']) or !is_numeric($_GET['id'])){
   exit;
 }
 
-//CONSULTA A Aluno
+//CONSULTA o Aluno
 $obAluno = Aluno::getAluno($_GET['id']);
 
-//VALIDAÇÃO DA Aluno
+//VALIDAÇÃO Do Aluno
 if(!$obAluno instanceof Aluno){
   header('location: index.php?status=error');
   exit;

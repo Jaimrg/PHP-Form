@@ -42,7 +42,8 @@ class Database{
    * @var PDO
    */
   private $connection;
-
+  
+  public $conn;
   /**
    * Define a tabela e instancia e conexão
    * @param string $table
@@ -52,18 +53,21 @@ class Database{
     $this->setConnection();
   }
 
+  
+
+
   /**
    * Método responsável por criar uma conexão com o banco de dados
    */
   private function setConnection(){
     try{
       $this->connection = new PDO('mysql:host='.self::HOST.';dbname='.self::NAME,self::USER,self::PASS);
-      $this->connection->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+      $this->connection->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);      
     }catch(PDOException $e){
       die('ERROR: '.$e->getMessage());
     }
   }
-
+  
   /**
    * Método responsável por executar queries dentro do banco de dados
    * @param  string $query
@@ -116,6 +120,44 @@ class Database{
 
     //MONTA A QUERY
     $query = 'SELECT '.$fields.' FROM '.$this->table.' '.$where.' '.$order.' '.$limit;
+
+    //EXECUTA A QUERY
+    return $this->execute($query);
+  }
+
+  /**
+   * Método responsável por executar uma consulta no banco usando o inner join
+   * @param  string $where
+   * @param  string $order
+   * @param  string $limit
+   * @param  string $fields
+   * @return PDOStatement
+   */
+  public function select_province($where = null, $order = null, $limit = null, $fields = 'a.nome,a.apelido,a.data_nascimento,d.designacao, a.genero'){
+    //DADOS DA QUERY
+    $where = strlen($where) ? 'WHERE '.$where : '';
+    $order = strlen($order) ? 'ORDER BY '.$order : '';
+    $limit = strlen($limit) ? 'LIMIT '.$limit : '';
+    
+
+
+    //MONTA A QUERY
+    $query = 'SELECT a.id,a.nome,a.apelido,a.data_nascimento,d.designacao, a.genero FROM `alunos` as a JOIN `distrito` as d on a.distrito_id=d.id';
+
+    //EXECUTA A QUERY
+    return $this->execute($query);
+  }
+
+  public function select_province_each($where = null, $order = null, $limit = null, $fields = 'a.nome,a.apelido,a.data_nascimento,d.designacao, a.genero'){
+    //DADOS DA QUERY
+    $where = strlen($where) ? 'WHERE '.$where : '';
+    $order = strlen($order) ? 'ORDER BY '.$order : '';
+    $limit = strlen($limit) ? 'LIMIT '.$limit : '';
+    
+
+
+    //MONTA A QUERY
+    $query = 'SELECT a.id,a.nome,a.apelido,a.data_nascimento,d.designacao, a.genero FROM `alunos` as a JOIN `distrito` as d on a.distrito_id=d.id';
 
     //EXECUTA A QUERY
     return $this->execute($query);
